@@ -4,6 +4,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.crm.qa.base.TestBase;
+
+import junit.framework.Assert;
 public class HomePage extends TestBase {
 
 	@FindBy(xpath="//td[contains(text(),'User: Naveen K')]")
@@ -41,6 +43,12 @@ public class HomePage extends TestBase {
 	public TasksPage clickOnTasksLink(){
 		tasksLink.click();
 		return new TasksPage();
+	}
+	
+	//to check user name login session 
+	//write assert on ..Test() only
+	public boolean verifyCorrectUserName(){
+		return userNameLabel.isDisplayed();
 	}
 	
 }

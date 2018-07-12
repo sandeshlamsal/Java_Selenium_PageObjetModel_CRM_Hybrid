@@ -29,10 +29,16 @@ public class HomePageTest extends TestBase{
 	//testcases will be here
 	
 	//always import from testng package and add Test at end of Test methods
-	@Test
+	@Test(priority=1)
 	public void verifyHomePageTitleTest(){
 		String homePageTitle=homePage.verifyHomePageTitle();
 		Assert.assertEquals(homePageTitle,"CRMPRO","Home Page title not matched"); //params (actual,expected,string if assert is failed)
+	}
+	
+	//verify user name session
+	@Test(priority=2)
+	public void verifyUserNameTest(){
+		Assert.assertTrue(homePage.verifyCorrectUserName());
 	}
 	
 	@AfterMethod
