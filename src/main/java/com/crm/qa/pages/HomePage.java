@@ -5,10 +5,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.crm.qa.base.TestBase;
 
-import junit.framework.Assert;
 public class HomePage extends TestBase {
 
-	@FindBy(xpath="//td[contains(text(),'User: Naveen K')]")
+	@FindBy(xpath="//td//font[contains(text(),'User: Naveen K')]")
 	WebElement userNameLabel;
 	
 	@FindBy(xpath="//a[contains(text(),'Contacts')]")
