@@ -1,5 +1,7 @@
 package com.crm.qa.pages;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -7,26 +9,38 @@ import com.crm.qa.base.TestBase;
 
 public class HomePage extends TestBase {
 
-	@FindBy(xpath="//td//font[contains(text(),'User: Naveen K')]")
+	@FindBy(xpath = "//td[contains(text(),'User: Naveen K')]")
+	@CacheLookup 
+	//only in selenium, store lable in cache, so every time element will be in cache, to increase speed
+	//don't have to relook in DOM every time
+	//use for most unchanged names elements 
 	WebElement userNameLabel;
-	
-	@FindBy(xpath="//a[contains(text(),'Contacts')]")
+
+	@FindBy(xpath = "//a[contains(text(),'Contacts')]")
 	WebElement contactsLink;
 	
-	@FindBy(xpath="//a[contains(text(),'Deals')]")
+	@FindBy(xpath = "//a[contains(text(),'New Contact')]")
+	WebElement newContactLink;
+	
+
+	@FindBy(xpath = "//a[contains(text(),'Deals')]")
 	WebElement dealsLink;
-	
-	@FindBy(xpath="//a[contains(text(),'Tasks')]")
+
+	@FindBy(xpath = "//a[contains(text(),'Tasks')]")
 	WebElement tasksLink;
-	
-	//to initialize all above elements, use pageFactory
-	public HomePage(){
-		PageFactory.initElements(driver, this); //driver from parent
+
+	// Initializing the Page Objects:
+	public HomePage() {
+		PageFactory.initElements(driver, this);
 	}
 	
-	//will be called from homePageTest class and assert overthere.
 	public String verifyHomePageTitle(){
-		return driver.getTitle();		
+		return driver.getTitle();
+	}
+	
+	
+	public boolean verifyCorrectUserName(){
+		return userNameLabel.isDisplayed();
 	}
 	
 	public ContactsPage clickOnContactsLink(){
@@ -44,10 +58,12 @@ public class HomePage extends TestBase {
 		return new TasksPage();
 	}
 	
-	//to check user name login session 
-	//write assert on ..Test() only
-	public boolean verifyCorrectUserName(){
-		return userNameLabel.isDisplayed();
+	public void clickOnNewContactLink(){
+		//when we use, Actions use build and perform
+		Actions action = new Actions(driver);
+		action.moveToElement(contactsLink).build().perform();
+		newContactLink.click(); //fill contacts page from Data Driven, excel
+		
 	}
 	
 }
